@@ -4,9 +4,7 @@ Simple wrapper to drive Google Chrome from Python using the Remote Debugging Pro
 
 https://developer.chrome.com/devtools/docs/protocol/1.1/index
 
-## Example
-
-Run Google Chrome with remote debugging enabled `google-chrome -remote-debugging-port=9222`:
+## API
 
 ```python
 >>> from chromote import Chromote
@@ -18,6 +16,8 @@ Chromote(host="localhost", port=9222)
 >>> tab = chrome[0]
 >>> print tab
 Google - https://www.google.co.uk/
+>>> print tab.url
+https://www.google.co.uk/
 >>> tab.reload()
 '{"result":{},"id":1}'
 >>> tab.set_url('https://github.com/chromote')
@@ -25,20 +25,22 @@ Google - https://www.google.co.uk/
 >>> tab.evaluate('alert("Remotey");')
 ```
 
+Note: Google Chrome needs starting with the `-remote-debugging-port=<PORT>` option to be controlled remotely.
+
 ## Remote Browser Control
 
-The remote debugging port binds to localhost only so using Chromote with a remote
+The remote debugging port binds to localhost only so using chromote with a remote
 machine like a dashboard/kiosk setup will require tunneling to the machine first.
 
-On the remote machine start Chrome:
+On the remote machine start Google Chrome:
 
-    $ chromium-browser <DASHBOARD-URL> --incognito --kiosk -remote-debugging-port=9222
+    $ chromium-browser <URL> --incognito --kiosk -remote-debugging-port=9222
 
-On the local machine set up a tunnel to map the remote debug port to 9222 on localhost:
+On the local machine set up a tunnel to map the remote debugging port to 9222 on localhost:
 
     $ ssh remote-machine -L 9222:localhost:9222
 
-You than can drive the browsers from a Python script:
+You can then drive your dashboard/kiosk machine remotely to display the content you want.  
 
 ```python
 from time import sleep
