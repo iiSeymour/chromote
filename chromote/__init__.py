@@ -21,19 +21,31 @@ __all__ = ['Chromote', 'ChromeTab']
 class ChromeTab(object):
 
     def __init__(self, title, url, websocketURL):
-        self.title = title
-        self.url = url
-        self.websocketURL = websocketURL
-        self.message_id = 0
+        self._title = title
+        self._url = url
+        self._websocketURL = websocketURL
+        self._message_id = 0
 
     def _send(self, request):
-        self.message_id += 1
-        request['id'] = self.message_id
+        self._message_id += 1
+        request['id'] = self._message_id
         ws = websocket.create_connection(self.websocketURL)
         ws.send(json.dumps(request))
         res = ws.recv()
         ws.close()
         return res
+
+    @property
+    def title(self):
+        return self._title
+
+    @property
+    def url(self):
+        return self._url
+
+    @property
+    def websocketURL(self):
+        return self._websocketURL
 
     def reload(self):
         """
@@ -63,12 +75,11 @@ class ChromeTab(object):
 class Chromote(object):
 
     def __init__(self, host='localhost', port=9222):
-        self.host = host
-        self.port = port
-        self.url = 'http://%s:%d' % (self.host, self.port)
-        self.errmsg = "Connect error! Is Chrome running with -remote-debugging-port=%d" % self.port
+        self._host = host
+        self._port = port
+        self._url = 'http://%s:%d' % (self.host, self.port)
+        self._errmsg = "Connect error! Is Chrome running with -remote-debugging-port=%d" % self.port
         self._connect()
-        self.tabs = self._get_tabs()
 
     def _connect(self):
         """
@@ -77,19 +88,32 @@ class Chromote(object):
         try:
             requests.get(self.url)
         except ConnectionError:
-            raise ConnectionError(self.errmsg)
+            raise ConnectionError(self._errmsg)
 
     def _get_tabs(self):
         """
         Get all open browser tabs that are pages tabs
         """
         res = requests.get(self.url + '/json')
-        tabs = []
         for tab in res.json():
             if tab['type'] == 'page':
-                tabs.append(ChromeTab(tab['title'], tab['url'], tab['webSocketDebuggerUrl']))
+                yield ChromeTab(tab['title'], tab['url'], tab['webSocketDebuggerUrl'])
 
-        return tabs
+    @property
+    def host(self):
+        return self._host
+
+    @property
+    def port(self):
+        return self._port
+
+    @property
+    def url(self):
+        return self._url
+
+    @property
+    def tabs(self):
+        return tuple(self._get_tabs())
 
     def __len__(self):
         return len(self.tabs)
