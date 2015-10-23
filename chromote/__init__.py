@@ -57,7 +57,7 @@ class ChromeTab(object):
         return '%s - %s' % (self.title, self.url)
 
     def __repr__(self):
-        return 'ChromeTab(%s, %s, %s)' % (self.title, self.url, self.websocketURL)
+        return 'ChromeTab("%s", "%s", "%s")' % (self.title, self.url, self.websocketURL)
 
 
 class Chromote(object):
@@ -81,7 +81,7 @@ class Chromote(object):
 
     def _get_tabs(self):
         """
-        Get browser tabs
+        Get all open browser tabs that are pages tabs
         """
         res = requests.get(self.url + '/json')
         tabs = []
@@ -98,7 +98,7 @@ class Chromote(object):
         return '[Chromote(tabs=%d)]' % len(self)
 
     def __repr__(self):
-        return 'Chromote(%s, %s)' % (self.host, self.port)
+        return 'Chromote(host="%s", port=%s)' % (self.host, self.port)
 
     def __getitem__(self, i):
         return self.tabs[i]

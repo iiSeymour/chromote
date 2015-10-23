@@ -6,16 +6,13 @@ https://developer.chrome.com/devtools/docs/protocol/1.1/index
 
 ## Example
 
-Google Chrome needs to be running with the `-remote-debugging-port` option set:
-
-    $ google-chrome -remote-debugging-port=9222
+Google Chrome needs to be running with the `google-chrome -remote-debugging-port=9222` option set:
 
 ```python
-
 >>> from chromote import Chromote
 >>> chrome = Chromote()
 >>> chrome
-Chromote(localhost, 9222)
+Chromote(host="localhost", port=9222)
 >>> print chrome
 [Chromote(tabs=1)]
 >>> tab = chrome[0]
