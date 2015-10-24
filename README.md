@@ -13,7 +13,7 @@ https://developer.chrome.com/devtools/docs/protocol/1.1/index
 Chromote(host="localhost", port=9222)
 >>> print chrome
 [Chromote(tabs=1)]
->>> tab = chrome[0]
+>>> tab = chrome.tabs[0]
 >>> print tab
 Google - https://www.google.co.uk/
 >>> print tab.url
