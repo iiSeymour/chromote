@@ -4,6 +4,10 @@ Simple wrapper to drive Google Chrome from Python using the Remote Debugging Pro
 
 https://developer.chrome.com/devtools/docs/protocol/1.1/index
 
+## Installation
+
+    $ pip install chromote
+
 ## API
 
 ```python
@@ -40,7 +44,7 @@ On the local machine set up a tunnel to map the remote debugging port to 9222 on
 
     $ ssh remote-machine -L 9222:localhost:9222
 
-You can then drive your dashboard/kiosk machine remotely to display the content you want.  
+You can then drive your dashboard/kiosk machine remotely to display the content you want.
 
 ```python
 from time import sleep
