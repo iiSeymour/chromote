@@ -13,7 +13,7 @@ import requests
 import websocket
 from requests.exceptions import ConnectionError
 
-version = 0.1
+version = "0.1.1"
 __version__ = version
 __all__ = ['Chromote', 'ChromeTab']
 
@@ -58,6 +58,12 @@ class ChromeTab(object):
         Navigate the tab to the URL
         """
         return self._send({"method": "Page.navigate", "params": {"url": url}})
+
+    def set_zoom(self, scale):
+        """
+        Set the page zoom
+        """
+        return self.evalute("document.body.style.zoom={}".format(scale))
 
     def evalute(self, javascript):
         """

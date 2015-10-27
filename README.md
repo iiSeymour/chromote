@@ -26,6 +26,8 @@ https://www.google.co.uk/
 '{"result":{},"id":1}'
 >>> tab.set_url('https://github.com/chromote')
 '{"id":2,"result":{}}'
+>>> tab.set_zoom(1.2)
+'{"id":1,"result":{"result":{"type":"number","value":1.2,"description":"1.2"},"wasThrown":false}}'
 >>> tab.evaluate('alert("Remotey");')
 ```
 
