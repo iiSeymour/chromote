@@ -28,7 +28,7 @@ https://www.google.co.uk/
 '{"id":2,"result":{}}'
 >>> tab.set_zoom(1.2)
 '{"id":1,"result":{"result":{"type":"number","value":1.2,"description":"1.2"},"wasThrown":false}}'
->>> tab.evalute('alert("Remotey");')
+>>> tab.evaluate('alert("Remotey");')
 ```
 
 Note: Google Chrome needs starting with the `-remote-debugging-port=<PORT>` option to be controlled remotely.
