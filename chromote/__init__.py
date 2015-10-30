@@ -63,7 +63,7 @@ class ChromeTab(object):
         """
         Set the page zoom
         """
-        return self.evalute("document.body.style.zoom={}".format(scale))
+        return self.evaluate("document.body.style.zoom={}".format(scale))
 
     def evaluate(self, javascript):
         """
