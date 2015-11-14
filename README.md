@@ -65,3 +65,7 @@ while True:
         tab.set_url(site)
         sleep(30)
 ```
+
+## License
+
+MIT Copyright (c) 2015 Chris Seymour
