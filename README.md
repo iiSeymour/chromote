@@ -1,8 +1,6 @@
 # Chromote
 
-Simple wrapper to drive Google Chrome from Python using the Remote Debugging Protocol 1.1 API
-
-https://developer.chrome.com/devtools/docs/protocol/1.1/index
+Simple wrapper to drive Google Chrome from Python using the [Remote Debugging Protocol 1.1 API](https://developer.chrome.com/devtools/docs/protocol/1.1/index)
 
 ## Installation
 
