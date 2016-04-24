@@ -66,4 +66,4 @@ while True:
 
 ## License
 
-MIT Copyright (c) 2015 Chris Seymour
+MIT Copyright (c) 2016 Chris Seymour
