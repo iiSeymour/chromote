@@ -1,2 +1,2 @@
 requests
-websocket-client
+ws4py

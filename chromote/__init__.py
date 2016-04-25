@@ -10,7 +10,7 @@ https://developer.chrome.com/devtools/docs/protocol/1.1/index
 
 import json
 import requests
-import websocket
+from ws4py.client.threadedclient import WebSocketClient
 from requests.exceptions import ConnectionError
 
 version = "0.1.2"
@@ -29,11 +29,18 @@ class ChromeTab(object):
     def _send(self, request):
         self._message_id += 1
         request['id'] = self._message_id
-        ws = websocket.create_connection(self.websocketURL)
-        ws.send(json.dumps(request))
-        res = ws.recv()
-        ws.close()
-        return res
+        # TODO: Refactor so that ws connection happens in __init__, and
+        # close() happens in __del__.
+        ws = WebSocketClient(self.websocketURL, protocols=['http-only', 'chat'])
+        result = [None]  # mutable container, to get data out of receive handler
+        def received(self, m):
+            result[0] = str(m)
+            self.close()
+        WebSocketClient.opened = lambda self: self.send(json.dumps(request))
+        WebSocketClient.received_message = received
+        ws.connect()
+        ws.run_forever()  # Note: receive handler closes the connection
+        return result[0]
 
     @property
     def title(self):
