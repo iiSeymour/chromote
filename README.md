@@ -29,7 +29,7 @@ https://www.google.co.uk/
 >>> tab.evaluate('alert("Remotey");')
 ```
 
-Note: Google Chrome needs starting with the `-remote-debugging-port=<PORT>` option to be controlled remotely.
+Note: Google Chrome needs starting with the `--remote-debugging-port=<PORT>` option to be controlled remotely.
 
 ## Remote Browser Control
 
@@ -38,7 +38,7 @@ machine like a dashboard/kiosk setup will require tunneling to the machine first
 
 On the remote machine start Google Chrome:
 
-    $ chromium-browser <URL> --incognito --kiosk -remote-debugging-port=9222
+    $ chromium-browser <URL> --incognito --kiosk --remote-debugging-port=9222
 
 On the local machine set up a tunnel to map the remote debugging port to 9222 on localhost:
 
