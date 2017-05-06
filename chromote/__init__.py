@@ -3,9 +3,9 @@
 """
 Chromote
 
-Python wrapper for Google Chrome Remote Debugging Protocol 1.1
+Python wrapper for Google Chrome Remote Debugging Protocol 1.2
 
-https://developer.chrome.com/devtools/docs/protocol/1.1/index
+https://chromedevtools.github.io/devtools-protocol/1-2
 """
 
 import json
