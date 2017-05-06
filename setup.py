@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='chromote',
-    version='0.1.2',
+    version='0.2.0',
     description="Python Wrapper for the Google Chrome Remote Debugging Protocol",
     author='Chris Seymour',
     packages=find_packages(),

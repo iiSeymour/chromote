@@ -13,7 +13,7 @@ import requests
 import websocket
 from requests.exceptions import ConnectionError
 
-version = "0.1.2"
+version = "0.2.0"
 __version__ = version
 __all__ = ['Chromote', 'ChromeTab']
 
