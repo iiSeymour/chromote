@@ -47,6 +47,12 @@ class ChromeTab(object):
     def websocketURL(self):
         return self._websocketURL
 
+    @property
+    def html(self):
+        result = json.loads(self.evaluate('document.documentElement.outerHTML'))
+        value = result['result']['result']['value']
+        return value.encode('utf-8')
+
     def reload(self):
         """
         Reload the page
