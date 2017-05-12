@@ -8,6 +8,7 @@ Python wrapper for Google Chrome Remote Debugging Protocol 1.2
 https://chromedevtools.github.io/devtools-protocol/1-2
 """
 
+import base64
 import json
 import requests
 import websocket
@@ -76,6 +77,24 @@ class ChromeTab(object):
         Evaluate JavaScript on the page
         """
         return self._send({"method": "Runtime.evaluate", "params": {"expression": javascript}})
+
+    def screenshot(self, format='png', quality=85, fromSurface=False):
+        """
+        Take a screenshot of the page
+        """
+        args = {
+            "method": "Page.captureScreenshot",
+            "params": {
+                "format":      format,
+                "quality":     quality,
+                "fromSurface": fromSurface
+            }
+        }
+        result = self._send(args)
+        data = json.loads(result)
+        if data.has_key('error'):
+            raise ValueError(data['error']['data'])
+        return base64.b64decode(data.get('result',{}).get('data', ''))
 
     def __str__(self):
         return '%s - %s' % (self.title, self.url)
