@@ -8,13 +8,16 @@ Python wrapper for Google Chrome Remote Debugging Protocol 1.2
 https://chromedevtools.github.io/devtools-protocol/1-2
 """
 
-import base64
+
 import json
+from base64 import b64decode
+
 import requests
 import websocket
 from requests.exceptions import ConnectionError
 
-version = "0.2.0"
+
+version = "0.3.0"
 __version__ = version
 __all__ = ['Chromote', 'ChromeTab']
 
@@ -94,7 +97,7 @@ class ChromeTab(object):
         data = json.loads(result)
         if data.has_key('error'):
             raise ValueError(data['error']['data'])
-        return base64.b64decode(data.get('result',{}).get('data', ''))
+        return b64decode(data.get('result', {}).get('data', ''))
 
     def __str__(self):
         return '%s - %s' % (self.title, self.url)
