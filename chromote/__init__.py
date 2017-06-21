@@ -95,7 +95,7 @@ class ChromeTab(object):
         }
         result = self._send(args)
         data = json.loads(result)
-        if data.has_key('error'):
+        if 'error' in data:
             raise ValueError(data['error']['data'])
         return b64decode(data.get('result', {}).get('data', ''))
 
