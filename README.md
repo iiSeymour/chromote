@@ -4,7 +4,7 @@ Simple wrapper to drive Google Chrome from Python using the [Remote Debugging Pr
 
 ## Installation
 
-    $ pip install chromote
+    $ sudo pip3 install git+https://github.com/marshygeek/chromote
 
 ## API
 
