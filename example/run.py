@@ -10,7 +10,7 @@ from time import sleep
 from chromote import Chromote
 
 chrome = Chromote()
-print chrome
+print(chrome)
 
 tab = chrome.tabs[0]
 

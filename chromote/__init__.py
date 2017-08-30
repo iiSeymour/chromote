@@ -24,7 +24,8 @@ __all__ = ['Chromote', 'ChromeTab']
 
 class ChromeTab(object):
 
-    def __init__(self, title, url, websocketURL):
+    def __init__(self, id, title, url, websocketURL):
+        self.id = id
         self._title = title
         self._url = url
         self._websocketURL = websocketURL
@@ -103,7 +104,7 @@ class ChromeTab(object):
         return '%s - %s' % (self.title, self.url)
 
     def __repr__(self):
-        return 'ChromeTab("%s", "%s", "%s")' % (self.title, self.url, self.websocketURL)
+        return 'ChromeTab("%s" "%s", "%s", "%s")' % (self.id, self.title, self.url, self.websocketURL)
 
 
 class Chromote(object):
@@ -131,7 +132,18 @@ class Chromote(object):
         res = requests.get(self.url + '/json')
         for tab in res.json():
             if tab['type'] == 'page':
-                yield ChromeTab(tab['title'], tab['url'], tab['webSocketDebuggerUrl'])
+                yield ChromeTab(tab['id'], tab['title'], tab['url'], tab['webSocketDebuggerUrl'])
+
+    def add_tab(self, url=None):
+        tab = requests.get(self.url + '/json/new').json()
+        if url is not None:
+            ChromeTab(tab['id'], tab['title'], tab['url'], tab['webSocketDebuggerUrl']).set_url(url)
+            tab = requests.get(self.url + '/json').json()[0]
+
+        return ChromeTab(tab['id'], tab['title'], tab['url'], tab['webSocketDebuggerUrl'])
+
+    def close_tab(self, tab):
+        requests.get('{}/json/close/{}'.format(self.url, tab.id))
 
     @property
     def host(self):
