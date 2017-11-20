@@ -142,6 +142,9 @@ class Chromote(object):
 
         return ChromeTab(tab['id'], tab['title'], tab['url'], tab['webSocketDebuggerUrl'])
 
+    def activate_tab(self, tab):
+        requests.get('{}/json/activate/{}'.format(self.url, tab.id))
+
     def close_tab(self, tab):
         requests.get('{}/json/close/{}'.format(self.url, tab.id))
 
