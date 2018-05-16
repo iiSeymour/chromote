@@ -30,15 +30,26 @@ class ChromeTab(object):
         self._url = url
         self._websocketURL = websocketURL
         self._message_id = 0
+        self._ws = websocket.WebSocket()
 
     def _send(self, request):
         self._message_id += 1
         request['id'] = self._message_id
-        ws = websocket.create_connection(self.websocketURL)
-        ws.send(json.dumps(request))
-        res = ws.recv()
-        ws.close()
+        close_after = False
+        if not self._ws.connected:
+            self._ws.connect(self.websocketURL)
+            close_after = True
+        self._ws.send(json.dumps(request))
+        res = self._ws.recv()
+        if close_after:
+            self._ws.close()
         return res
+
+    def connect_websocket(self):
+        self._ws.connect(self.websocketURL)
+
+    def close_websocket(self):
+        self._ws.close()
 
     @property
     def title(self):
