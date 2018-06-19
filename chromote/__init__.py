@@ -115,6 +115,8 @@ class Chromote(object):
         self._url = 'http://%s:%d' % (self.host, self.port)
         self._errmsg = "Connect error! Is Chrome running with -remote-debugging-port=%d" % self.port
         self._connect()
+        self._message_id = 0
+        self.webSocketURL = ''
 
     def _connect(self):
         """
@@ -124,6 +126,7 @@ class Chromote(object):
             requests.get(self.url)
         except ConnectionError:
             raise ConnectionError(self._errmsg)
+        self.websocketURL = self.version['webSocketDebuggerUrl']
 
     def _get_tabs(self):
         """
@@ -148,6 +151,18 @@ class Chromote(object):
     def close_tab(self, tab):
         requests.get('{}/json/close/{}'.format(self.url, tab.id))
 
+    def _send(self, request):
+        self._message_id += 1
+        request['id'] = self._message_id
+        ws = websocket.create_connection(self.websocketURL)
+        ws.send(json.dumps(request))
+        res = ws.recv()
+        ws.close()
+        return res
+
+    def close_browser(self):
+        return self._send({'method': 'Browser.close'})
+
     @property
     def host(self):
         return self._host
@@ -163,6 +178,11 @@ class Chromote(object):
     @property
     def tabs(self):
         return tuple(self._get_tabs())
+
+    @property
+    def version(self):
+        response = requests.get('{}/json/version'.format(self.url))
+        return response.json()
 
     def __len__(self):
         return len(self.tabs)
