@@ -16,13 +16,14 @@ import requests
 import websocket
 from requests.exceptions import ConnectionError
 
+from .input import InputMixin
 
 version = "0.4.0"
 __version__ = version
 __all__ = ['Chromote', 'ChromeTab']
 
 
-class ChromeTab(object):
+class ChromeTab(InputMixin):
 
     def __init__(self, id, title, url, websocketURL):
         self.id = id
