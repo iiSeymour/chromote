@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example script demostrating the use of Chromote to
+Example script demonstrating the use of Chromote to
 update a remote browser periodically from a list of sites
 """
 
